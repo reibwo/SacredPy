@@ -1,1 +1,1 @@
-web: gunicorn sacred.wsgi
+web: newrelic-admin run-program gunicorn sacred.wsgi
