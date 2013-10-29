@@ -222,8 +222,9 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.cache.RedisCache',
-        'LOCATION': 'redistogo@soldierfish.redistogo.com:9551:1',
+        'LOCATION': 'soldierfish.redistogo.com:9551:1',
         'OPTIONS': {
+            'USERNAME': 'redistogo',
             'PASSWORD': 'e351a1d2c0329a2e2e8b2da481120dd8'
         }
     },
