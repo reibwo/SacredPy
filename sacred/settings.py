@@ -219,6 +219,16 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'redistogo@soldierfish.redistogo.com:9551:1',
+        'OPTIONS': {
+            'PASSWORD': 'e351a1d2c0329a2e2e8b2da481120dd8'
+        }
+    },
+}
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'askbot.deps.django_authopenid.backends.AuthBackend',
