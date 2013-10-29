@@ -99,6 +99,7 @@ PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+ASKBOT_SELF_TEST = False
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -209,20 +210,20 @@ INSTALLED_APPS = (
 
 #setup memcached for production use!
 #see http://docs.djangoproject.com/en/1.1/topics/cache/ for details
-CACHE_BACKEND = 'locmem://'
+#CACHE_BACKEND = 'locmem://'
 #needed for django-keyedcache
-CACHE_TIMEOUT = 6000
+#CACHE_TIMEOUT = 6000
 #sets a special timeout for livesettings if you want to make them different
-LIVESETTINGS_CACHE_TIMEOUT = CACHE_TIMEOUT
-CACHE_PREFIX = 'askbot' #make this unique
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+#LIVESETTINGS_CACHE_TIMEOUT = CACHE_TIMEOUT
+#CACHE_PREFIX = 'askbot' #make this unique
+#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.cache.RedisCache',
-        'LOCATION': 'soldierfish.redistogo.com:9551:1',
+        'LOCATION': 'soldierfish.redistogo.com:9551:0',
         'OPTIONS': {
             'USERNAME': 'redistogo',
             'PASSWORD': 'e351a1d2c0329a2e2e8b2da481120dd8'
