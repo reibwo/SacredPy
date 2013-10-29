@@ -46,15 +46,9 @@ ALLOWED_HOSTS = ['*']
 
 
 #outgoing mail server settings
-SERVER_EMAIL = ''
-DEFAULT_FROM_EMAIL = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_SUBJECT_PREFIX = ''
-EMAIL_HOST=''
-EMAIL_PORT=''
-EMAIL_USE_TLS=False
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = 'key-48hwkh8phf8jvg7x47x3rdxq02d9zbf1'
+MAILGUN_SERVER_NAME = 'app18975769.mailgun.org'
 
 #incoming mail settings
 #after filling out these settings - please
