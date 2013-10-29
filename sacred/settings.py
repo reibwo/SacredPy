@@ -19,19 +19,30 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+# Parse database configuration from $DATABASE_URL
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'textdb',                      # Or path to database file if using sqlite3.
-        'USER': 'pguser',                      # Not used with sqlite3.
-        'PASSWORD': 'pgpass',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
-        'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
-    }
-}
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+#DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        #'NAME': 'textdb',                      # Or path to database file if using sqlite3.
+        #'USER': 'pguser',                      # Not used with sqlite3.
+        #'PASSWORD': 'pgpass',                  # Not used with sqlite3.
+        #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        #'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
+        #'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
+    #}
+#}
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
 
 #outgoing mail server settings
 SERVER_EMAIL = ''
@@ -80,6 +91,8 @@ LANGUAGE_CODE = 'en'
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'askbot', 'upfiles')
 MEDIA_URL = '/upfiles/'
 STATIC_URL = '/m/'#this must be different from MEDIA_URL
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_ROOT = os.path.dirname(__file__)
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
@@ -246,6 +259,7 @@ CSRF_COOKIE_NAME = '_csrf'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
     ('default/media', os.path.join(ASKBOT_ROOT, 'media')),
 )
 STATICFILES_FINDERS = (
