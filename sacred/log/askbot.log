@@ -136,3 +136,4 @@ ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply
 /Users/jasonamyers/.virtualenv/SacredPy/lib/python2.7/site-packages/gunicorn/glogging.py TIME: 2013-10-28 21:19:23,108 MSG: glogging.py:info:213 Worker exiting (pid: 3621)
 /Users/jasonamyers/.virtualenv/SacredPy/lib/python2.7/site-packages/gunicorn/glogging.py TIME: 2013-10-28 21:19:28,556 MSG: glogging.py:info:213 Worker exiting (pid: 3646)
 /Users/jasonamyers/.virtualenv/SacredPy/lib/python2.7/site-packages/gunicorn/glogging.py TIME: 2013-10-28 21:19:39,978 MSG: glogging.py:info:213 Worker exiting (pid: 3647)
+/Users/jasonamyers/.virtualenv/SacredPy/lib/python2.7/site-packages/gunicorn/glogging.py TIME: 2013-10-28 21:22:28,686 MSG: glogging.py:info:213 Worker exiting (pid: 3699)
