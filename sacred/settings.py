@@ -20,29 +20,35 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'textdb',                      # Or path to database file if using sqlite3.
-        'USER': 'pguser',                      # Not used with sqlite3.
-        'PASSWORD': 'pgpass',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
-        'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
-    }
-}
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES = {}
+DATABASES['default'] =  dj_database_url.config()
+
+#DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        #'NAME': 'textdb',                      # Or path to database file if using sqlite3.
+        #'USER': 'pguser',                      # Not used with sqlite3.
+        #'PASSWORD': 'pgpass',                  # Not used with sqlite3.
+        #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        #'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
+        #'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
+    #}
+#}
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
 
 #outgoing mail server settings
-SERVER_EMAIL = ''
-DEFAULT_FROM_EMAIL = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_SUBJECT_PREFIX = ''
-EMAIL_HOST=''
-EMAIL_PORT=''
-EMAIL_USE_TLS=False
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = 'key-48hwkh8phf8jvg7x47x3rdxq02d9zbf1'
+MAILGUN_SERVER_NAME = 'app18975769.mailgun.org'
 
 #incoming mail settings
 #after filling out these settings - please
@@ -79,10 +85,15 @@ LANGUAGE_CODE = 'en'
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'askbot', 'upfiles')
 MEDIA_URL = '/upfiles/'
-STATIC_URL = '/m/'#this must be different from MEDIA_URL
+#STATIC_URL = '/m/'#this must be different from MEDIA_URL
 
-PROJECT_ROOT = os.path.dirname(__file__)
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+ASKBOT_SELF_TEST = False
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -193,15 +204,26 @@ INSTALLED_APPS = (
 
 #setup memcached for production use!
 #see http://docs.djangoproject.com/en/1.1/topics/cache/ for details
-CACHE_BACKEND = 'locmem://'
+#CACHE_BACKEND = 'locmem://'
 #needed for django-keyedcache
-CACHE_TIMEOUT = 6000
+#CACHE_TIMEOUT = 6000
 #sets a special timeout for livesettings if you want to make them different
-LIVESETTINGS_CACHE_TIMEOUT = CACHE_TIMEOUT
-CACHE_PREFIX = 'askbot' #make this unique
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+#LIVESETTINGS_CACHE_TIMEOUT = CACHE_TIMEOUT
+#CACHE_PREFIX = 'askbot' #make this unique
+#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'soldierfish.redistogo.com:9551:0',
+        'OPTIONS': {
+            'USERNAME': 'redistogo',
+            'PASSWORD': 'e351a1d2c0329a2e2e8b2da481120dd8'
+        }
+    },
+}
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -244,8 +266,9 @@ CSRF_COOKIE_NAME = '_csrf'
 #https://docs.djangoproject.com/en/1.3/ref/contrib/csrf/
 #CSRF_COOKIE_DOMAIN = DOMAIN_NAME
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+#STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH, 'static'),
     ('default/media', os.path.join(ASKBOT_ROOT, 'media')),
 )
 STATICFILES_FINDERS = (
