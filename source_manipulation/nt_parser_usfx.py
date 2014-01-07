@@ -3,6 +3,7 @@ from pprint import pprint
 
 class Processor(object):
 	def __init__(self, fname):
+		print fname
 		self.tree = etree.parse(fname)
 		self.books = list()
 		self.process_book()
@@ -42,7 +43,7 @@ class Processor(object):
 
 			
 if __name__ == '__main__':
-	p = Processor('eng-nt_usfx.xml')
+	p = Processor('eng-nt-usfx.xml')
 	for book in p.books:
 		if book['name'].startswith('Matt'):
 			pprint(book)

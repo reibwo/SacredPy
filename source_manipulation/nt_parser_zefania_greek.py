@@ -3,6 +3,7 @@ from pprint import pprint
 
 class Processor(object):
     def __init__(self, fname):
+        print fname
         self.tree = etree.parse(fname)
         print self.tree
         self.books = list()
@@ -33,7 +34,7 @@ class Processor(object):
                 })
 
 if __name__ == '__main__':
-    p = Processor('nt_zephania_greek.xml')
+    p = Processor('nt_zefania_greek.xml')
     print len(p.books)
     with open('test.txt', 'wb') as f:
         for book in p.books:
